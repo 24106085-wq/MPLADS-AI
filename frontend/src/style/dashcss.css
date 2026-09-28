@@ -1,0 +1,419 @@
+/* src/style/dashcss.css
+   Dashboard-page-specific styles. Shared component styles (buttons, tables,
+   modals, badges, KPI cards) live in src/index.css. */
+
+.dashboard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.dashboard__title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-900);
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.dashboard__subtitle {
+  font-size: 12.5px;
+  color: var(--text-500);
+  margin-top: 6px;
+  max-width: 35rem;
+  line-height: 1.55;
+}
+
+/* Console context strip above the page title */
+.dashboard__header::before {
+  content: "MPLADS / PUBLIC INFRASTRUCTURE INTELLIGENCE CONSOLE";
+  display: block;
+  width: 100%;
+  font-size: 9.5px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-400);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dashboard__title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.backend-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  padding: 3px 9px 3px 8px;
+  border-radius: var(--radius-xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.backend-status__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 0;
+  flex-shrink: 0;
+}
+
+.backend-status--online {
+  color: var(--green);
+  background: var(--green-soft);
+  border: 1px solid var(--green-border);
+}
+.backend-status--online .backend-status__dot {
+  background: var(--green);
+}
+
+.backend-status--offline {
+  color: var(--text-500);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+}
+.backend-status--offline .backend-status__dot {
+  background: var(--text-400);
+}
+
+.dashboard__actions {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* ===================== ROLE SWITCHER ===================== */
+/* Milestone 4 — role-selection UI refresh. Presentational only: the
+   underlying roleKey/scopeValue state and filtering logic in
+   Dashboard.jsx are unchanged. */
+
+.role-switcher {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink-950);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  box-shadow: none;
+  padding: 13px 18px;
+  margin-bottom: 18px;
+}
+
+/* Non-admin, logged-in view — the scope is enforced server-side (see
+   backend/auth.py + GET /api/projects), so this reads as an informational
+   badge rather than an interactive control like the full switcher above. */
+.role-switcher--locked {
+  border-left-color: var(--green);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.role-switcher--locked .role-switcher__label {
+  color: var(--green);
+  font-size: 12px;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 600;
+}
+
+.role-switcher__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.role-switcher__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-500);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.role-switcher__count {
+  font-size: 12px;
+  color: var(--text-500);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.role-switcher__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.role-switcher__tabs {
+  display: flex;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 0;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.role-switcher__tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: var(--surface);
+  color: var(--text-500);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 0;
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.role-switcher__tab:last-child {
+  border-right: none;
+}
+
+.role-switcher__tab:hover {
+  color: var(--text-900);
+  background: var(--surface-sunken);
+}
+
+.role-switcher__tab--active {
+  background: var(--ink-950);
+  color: var(--ondark-heading);
+  box-shadow: none;
+}
+
+.role-switcher__tab--active:hover {
+  background: var(--ink-900);
+  color: var(--ondark-heading);
+}
+
+.role-switcher__tab-check {
+  flex-shrink: 0;
+}
+
+.role-switcher__scope {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.role-switcher__scope label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-500);
+  white-space: nowrap;
+}
+
+.role-switcher__scope select {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 7px 10px;
+  font-size: 12.5px;
+  background: var(--surface);
+  color: var(--text-700);
+  outline: none;
+  min-width: 10rem;
+}
+
+.role-switcher__scope select:focus {
+  border-color: var(--primary);
+}
+
+.role-switcher__note {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  .role-switcher__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .role-switcher__scope select {
+    width: 100%;
+  }
+}
+
+/* ===================== AI MONITORING SUMMARY ===================== */
+
+.ai-summary {
+  background: var(--ink-950);
+  border-radius: var(--radius-sm);
+  padding: 0;
+  margin-bottom: 22px;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.ai-summary__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.ai-summary__title-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ai-summary__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-xs);
+  background: transparent;
+  border: 1.5px solid var(--accent);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ai-summary__title-group h2 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ondark-heading);
+}
+
+.ai-summary__title-group p {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--ondark-muted);
+  margin-top: 2px;
+}
+
+.ai-summary__status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+  color: var(--ondark-green-text);
+  background: transparent;
+  border: 1px solid var(--ondark-green-border);
+  padding: 4px 10px;
+  border-radius: var(--radius-xs);
+}
+
+.ai-summary__status-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--ondark-green-dot);
+  flex-shrink: 0;
+}
+
+.ai-summary__grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: var(--ink-line);
+}
+
+.ai-signal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ink-950);
+  border: none;
+  border-radius: 0;
+  padding: 13px 14px;
+  color: var(--white);
+}
+
+.ai-signal__value {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  font-weight: 700;
+  display: block;
+  line-height: 1.1;
+}
+
+.ai-signal__label {
+  font-size: 10px;
+  color: var(--ondark-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.3;
+  display: block;
+  margin-top: 3px;
+}
+
+.ai-signal--critical { color: var(--signal-critical); }
+.ai-signal--high { color: var(--signal-high); }
+.ai-signal--amber { color: var(--signal-amber); }
+.ai-signal--blue { color: var(--signal-blue); }
+
+/* ===================== TABLE SECTION ===================== */
+
+.dashboard__table-section {
+  margin-top: 8px;
+}
+
+.dashboard__table-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 7px;
+  border-bottom: 2px solid var(--ink-950);
+}
+
+.dashboard__table-heading h2 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-700);
+}
+
+.dashboard__table-heading span {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-500);
+}
+
+@media (max-width: 1200px) {
+  .ai-summary__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .ai-summary__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-summary__grid {
+    grid-template-columns: 1fr;
+  }
+}

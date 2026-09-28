@@ -1,0 +1,142 @@
+/* src/style/login.css
+   Login screen — reuses global tokens + .form-field/.btn-primary from
+   index.css so it stays visually consistent with the rest of the console. */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 24px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 28px 26px 24px;
+  box-shadow: 0 12px 32px rgba(13, 18, 28, 0.08);
+}
+
+.login-card__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.login-card__brand-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--ink-900);
+  color: var(--ondark-heading, #f1f3f8);
+  flex-shrink: 0;
+}
+
+.login-card__brand-title {
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-900);
+  letter-spacing: 0.2px;
+}
+
+.login-card__brand-sub {
+  display: block;
+  font-size: 11.5px;
+  color: var(--text-500);
+}
+
+.login-card__notice {
+  background: var(--red-soft);
+  border: 1px solid var(--red-border);
+  color: var(--red);
+  font-size: 12.5px;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-bottom: 16px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.login-form__error {
+  background: var(--red-soft);
+  border: 1px solid var(--red-border);
+  color: var(--red);
+  font-size: 12.5px;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+.login-form__submit {
+  justify-content: center;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.login-demo {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--border);
+}
+
+.login-demo__label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-500);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 10px;
+}
+
+.login-demo__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.login-demo__btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-700);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 9px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+  text-align: left;
+}
+
+.login-demo__btn:hover:not(:disabled) {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.login-demo__btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.login-demo__note {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--text-400);
+  line-height: 1.5;
+}

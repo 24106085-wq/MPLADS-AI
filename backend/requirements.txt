@@ -1,0 +1,39 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+pandas==2.2.2
+numpy==1.26.4
+python-multipart==0.0.9
+pydantic==2.8.2
+
+# --- Required by evidence.py (Photo Evidence quality/EXIF/duplicate-hash
+# analysis). This was missing from the checkpoint even though evidence.py
+# has always imported it — added here as a genuine (not cosmetic) fix.
+Pillow==10.4.0
+
+# --- Added in Milestone 2: ml_anomaly.py (Isolation Forest) and
+# duplicate_detector.py (TF-IDF + cosine similarity) both use scikit-learn.
+# No new dependency was needed for either feature beyond this one package.
+scikit-learn==1.5.2
+
+# --- Added in Milestone 3: predictive_model.py (delay/cost-overrun
+# classifiers + SHAP explainability). scikit-learn above already covers the
+# classifiers; shap is optional — if it can't be installed, the app
+# automatically falls back to a labeled linear feature-importance
+# explanation instead (see predictive_model.py Part C).
+shap==0.46.0
+
+# --- Testing ---
+pytest==8.3.3
+
+# --- Rate limiting (Milestone 4, Part H follow-up) --- per-IP request
+# limits on /api/upload and the alert/notification-listing endpoints.
+slowapi==0.1.9
+
+# --- Authentication (backend/auth.py) --- JWT issuing/verification for the
+# simple backend-verified login. Password hashing uses stdlib hashlib only,
+# no extra dependency needed for that half.
+PyJWT==2.7.0
+
+# --- Still deliberately deferred (see risk_engine.py "FUTURE ML HOOK") ---
+# sqlalchemy        # Only needed once PostgreSQL is actually wired in
+# psycopg2-binary   # PostgreSQL driver, only needed once DATABASE_URL is used

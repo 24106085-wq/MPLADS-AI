@@ -1,0 +1,185 @@
+/* src/style/settings.css
+   Settings page — Profile / Notification Preferences / Display / Data Status.
+   Reuses global tokens + .form-grid/.form-field/.btn-primary from index.css
+   and the .dashboard__title / .project-details-page__header header pattern
+   already used by other pages, so this stays visually consistent with the
+   rest of the console without introducing a new design language. */
+
+.settings-loading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 40px 0;
+  color: var(--text-500);
+  font-size: 13px;
+  justify-content: center;
+}
+
+.settings-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* The Appearance card sits between the page header and the form (it's a
+   client-only preference, saved instantly rather than via Save Changes),
+   so it needs its own bottom margin to match the form's row gap. */
+.settings-page > .settings-card {
+  margin-bottom: 16px;
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.theme-toggle__option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-700);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle__option:hover {
+  border-color: var(--border-strong);
+  color: var(--text-900);
+}
+
+.theme-toggle__option--active {
+  background: var(--primary-soft);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.settings-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+}
+
+.settings-card__title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-700);
+  margin: 0 0 14px;
+}
+
+.settings-toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 9px 6px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+}
+
+.settings-toggle:hover {
+  background: var(--surface-sunken);
+}
+
+.settings-toggle input[type="checkbox"] {
+  margin-top: 3px;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+}
+
+.settings-toggle span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.settings-toggle strong {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-900);
+}
+
+.settings-toggle small {
+  font-size: 11px;
+  color: var(--text-500);
+  line-height: 1.4;
+}
+
+.settings-status-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.settings-status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+  padding: 12px 14px;
+}
+
+.settings-status-item__label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-500);
+}
+
+.settings-status-item__value {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-900);
+}
+
+.settings-status-item__value--ok {
+  color: var(--green);
+}
+
+.settings-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+}
+
+.settings-actions__saved {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.settings-actions__error {
+  color: var(--red);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .settings-status-grid {
+    grid-template-columns: 1fr;
+  }
+}

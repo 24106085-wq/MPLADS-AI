@@ -1,0 +1,428 @@
+/* src/style/investigation.css
+   Investigation UI extras — additive only, reuses the app's existing
+   design tokens (var(--*)) and pm-* / modal component classes from
+   index.css. Nothing here redefines an existing rule. */
+
+.inv-status-pill {
+  margin-left: auto;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.inv-status-pill--open { background: var(--blue-soft); color: var(--blue); border-color: var(--blue-border); }
+.inv-status-pill--under-verification { background: var(--amber-soft); color: var(--amber); border-color: var(--amber-border); }
+.inv-status-pill--action-taken { background: var(--orange-soft); color: var(--orange); border-color: var(--orange-border); }
+.inv-status-pill--closed { background: var(--green-soft); color: var(--green); border-color: var(--green-border); }
+
+.inv-subheading {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-500);
+  margin-bottom: 7px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.inv-mismatch-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: var(--orange-soft);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--orange);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-700);
+}
+.inv-mismatch-note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--orange);
+}
+
+.inv-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 12px;
+  width: fit-content;
+}
+.inv-upload-btn input {
+  display: none;
+}
+
+.inv-status-track {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin: 12px 0 18px;
+  padding: 12px 14px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xs);
+}
+.inv-status-step {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  color: var(--text-400);
+  font-size: 10.5px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.inv-status-step::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--border-strong) 0px,
+    var(--border-strong) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+  margin: 0 8px;
+}
+.inv-status-step:last-child::after {
+  display: none;
+}
+.inv-status-step__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 0;
+  background: transparent;
+  border: 1.5px solid var(--border-strong);
+  flex-shrink: 0;
+  transition: background 0.16s ease, border-color 0.16s ease;
+}
+.inv-status-step--done {
+  color: var(--text-900);
+}
+.inv-status-step--done .inv-status-step__dot {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.inv-status-step--done::after {
+  background: var(--accent);
+  opacity: 0.45;
+}
+
+.inv-action-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.inv-action-select,
+.inv-action-remarks {
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text-900);
+}
+.inv-action-select {
+  min-width: 11.25rem;
+}
+.inv-action-remarks {
+  flex: 1;
+  min-width: 11.25rem;
+}
+
+/* Read-only "acting as" badge — replaces the old free-text role picker.
+   The role shown here comes from the verified login session (see
+   apiClient.getStoredUser()), not something editable in this form. */
+.inv-action-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-700);
+  background: var(--surface-sunken);
+  white-space: nowrap;
+}
+
+.inv-action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.inv-action-btn {
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  border-radius: var(--radius-xs);
+  padding: 8px 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.inv-action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.inv-action-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+.inv-action-btn--accent { background: var(--primary); border-color: var(--primary); color: var(--white); }
+.inv-action-btn--good { background: var(--green); border-color: var(--green); color: var(--white); }
+.inv-action-btn--warn { background: var(--amber); border-color: var(--amber); color: var(--white); }
+.inv-action-btn--bad { background: var(--red); border-color: var(--red); color: var(--white); }
+.inv-action-btn--neutral { background: var(--surface); color: var(--text-700); }
+.inv-action-btn--selected {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.inv-history {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.inv-history__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  color: var(--text-700);
+  padding: 5px 0 5px 10px;
+  border-left: 2px solid var(--border);
+  line-height: 1.5;
+}
+.inv-history__item svg {
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: var(--text-400);
+}
+
+/* ---------------- Field Evidence cards ---------------- */
+
+.ev-uploading {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.ev-spin {
+  animation: ev-spin 0.9s linear infinite;
+}
+@keyframes ev-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.ev-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16.25rem, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.ev-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--ink-950);
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  overflow: hidden;
+  counter-increment: ev-index;
+}
+
+/* Evidence index — inspection records are numbered, not just listed. */
+.ev-grid { counter-reset: ev-index; }
+.ev-card__filename::before {
+  content: "EV-" counter(ev-index, decimal-leading-zero) " · ";
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.ev-card__media {
+  width: 100%;
+  height: 9.375rem;
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.ev-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ev-card__media-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-400);
+  font-size: 11px;
+  text-align: center;
+  padding: 0 14px;
+}
+.ev-card__media-placeholder-note {
+  font-size: 10px;
+  color: var(--text-400);
+  line-height: 1.3;
+}
+
+.ev-card__body {
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ev-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+.ev-card__filename {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-900);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 10rem;
+}
+
+.ev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  border: 1px solid transparent;
+}
+.ev-badge--good { background: var(--green-soft); color: var(--green); border-color: var(--green-border); }
+.ev-badge--bad { background: var(--orange-soft); color: var(--orange); border-color: var(--orange-border); }
+
+.ev-row--meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-500);
+}
+.ev-dim {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+}
+
+.ev-metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 10px;
+  padding: 8px 0;
+  border-top: 1px dashed var(--border);
+  border-bottom: 1px dashed var(--border);
+}
+.ev-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.ev-metric__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text-400);
+  font-weight: 700;
+}
+.ev-metric__value {
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-900);
+}
+.ev-metric__value--warn {
+  color: var(--orange);
+}
+
+.ev-notes {
+  font-size: 12px;
+  color: var(--text-700);
+  line-height: 1.4;
+  margin: 0;
+}
+.ev-notes--warn {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  color: var(--orange);
+  background: var(--orange-soft);
+  border-left: 2px solid var(--orange);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: 6px 8px;
+}
+.ev-notes--warn svg {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.ev-exif {
+  font-size: 12px;
+}
+.ev-exif__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--text-400);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+.ev-exif__list {
+  margin: 0;
+  padding-left: 16px;
+  color: var(--text-700);
+  line-height: 1.5;
+}
+.ev-exif__none {
+  color: var(--text-500);
+  font-style: italic;
+  line-height: 1.4;
+  display: block;
+}

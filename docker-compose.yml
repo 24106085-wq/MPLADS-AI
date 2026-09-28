@@ -1,0 +1,44 @@
+# docker-compose.yml
+#
+# `docker-compose up --build` alone gets you from clone to a running app:
+# - backend on http://localhost:8000 (seeded with the 18 sample projects)
+# - frontend on http://localhost:5173, already pointed at that backend
+#
+# Every value below has the same safe default as backend/.env.example and
+# frontend/.env.example, so nothing needs to be set. To override any of
+# them (e.g. for a real deployment), copy this repo's variables into a
+# `.env` file next to this docker-compose.yml — Compose reads it
+# automatically — or export them in your shell before `docker-compose up`.
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      # Comma-separated list of allowed CORS origins — see
+      # backend/.env.example. localhost:5173 (this compose file's frontend
+      # port) is always allowed by main.py regardless, so this is only
+      # needed if you remap FRONTEND_PORT below or add another origin.
+      - FRONTEND_URL=${FRONTEND_URL:-}
+      - PORT=8000
+    volumes:
+      # Persists the SQLite database (backend/data/mplads.db) across
+      # `docker-compose down`/`up` cycles — see README.md "Data storage".
+      - ./backend/data:/app/data
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # Baked into the static build at image-build time (Vite inlines
+        # VITE_* vars) — see frontend/.env.example. Defaults to the
+        # backend port above as seen from your browser on the host.
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:${BACKEND_PORT:-8000}}
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    depends_on:
+      - backend
+    restart: unless-stopped
