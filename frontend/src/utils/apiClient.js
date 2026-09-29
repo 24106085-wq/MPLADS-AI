@@ -8,8 +8,8 @@
 // "https://api.example.com/" doesn't produce double-slash request URLs
 // (`${API_BASE}${path}` below always supplies its own leading "/").
 const API_BASE = (import.meta.env.VITE_API_BASE_URL || "http://localhost:8000").replace(/\/+$/, "");
-const TIMEOUT_MS = 4000;
-
+const TIMEOUT_MS = 10000;
+const HEALTH_TIMEOUT_MS = 60000;
 // ---------------------------------------------------------------------------
 // Auth session (JWT + hashed passwords — see backend/auth.py). The token is
 // the actual security boundary, checked server-side on every protected
@@ -45,9 +45,9 @@ export function clearAuthSession() {
   localStorage.removeItem(AUTH_USER_KEY);
 }
 
-async function request(path, options = {}) {
+async function request(path, options = {}, timeoutMs = TIMEOUT_MS) {
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), TIMEOUT_MS);
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
   const token = getAuthToken();
   const headers = { ...(options.headers || {}) };
   if (token) headers.Authorization = `Bearer ${token}`;
@@ -84,7 +84,7 @@ export async function fetchMeFromApi() {
 /** True if the FastAPI backend responds within the timeout window. */
 export async function checkBackendHealth() {
   try {
-    await request("/api/health");
+    await request("/api/health", {}, HEALTH_TIMEOUT_MS);
     return true;
   } catch {
     return false;
